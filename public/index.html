@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Streamie - Movie Stream</title>
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">Streamie</div>
+    <div class="search-container">
+        <input type="text" placeholder="Search..." class="search-input">
+        <div class="search-results" style="display: none;"></div>
+    </div>
+    <div class="auth-buttons">
+      <button class="login-btn" id="loginBtn">Login</button>
+      <button class="signup-btn">Sign Up</button>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Unlimited movies, TV shows, and more</h1>
+      <p>Watch anywhere. Enjoy your favorite content today.</p>
+      <div class="browse-options">
+        <button class="browse-option active" data-type="all">All</button>
+        <button class="browse-option" data-type="movie">Movies</button>
+        <button class="browse-option" data-type="tv">TV Shows</button>
+      </div>
+      <div class="filter-container">
+        <select id="genreFilter" class="filter-select">
+          <option value="">All Genres</option>
+        </select>
+        <select id="yearFilter" class="filter-select">
+          <option value="">All Years</option>
+        </select>
+        <select id="languageFilter" class="filter-select">
+          <option value="">All Languages</option>
+        </select>
+        <select id="sortFilter" class="filter-select">
+          <option value="popularity.desc">Most Popular</option>
+          <option value="vote_average.desc">Highest Rated</option>
+          <option value="release_date.desc">Latest</option>
+          <option value="release_date.asc">Oldest</option>
+        </select>
+        <select id="sortOrderFilter" class="filter-select">
+          <option value="desc">Descending</option>
+          <option value="asc">Ascending</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Profile Section (Hidden by default) -->
+  <div class="user-profile" id="userProfile" style="display: none;">
+    <div class="profile-container">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <img id="userAvatar" src="/api/placeholder/80/80" alt="User Avatar">
+        </div>
+        <div class="profile-info">
+          <h2 id="userName">User Name</h2>
+          <p id="userEmail">user@example.com</p>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recently Watched Section -->
+  <div class="recently-watched" id="recentlyWatched" style="display: none;">
+    <div class="recommendation-header">
+      <h2 class="category-title">Recently Watched</h2>
+      <button class="clear-history">Clear History</button>
+    </div>
+    <div class="row" id="recentlyWatchedRow">
+      <!-- Recently watched items will be added here -->
+    </div>
+  </div>
+
+  <!-- Movie Recommendations Section -->
+  <div class="recommendations" id="recommendationsSection" style="display: none;">
+    <h2 class="category-title">Recommended For You</h2>
+    <div class="row" id="recommendationsRow">
+      <!-- Recommendations will be added here -->
+    </div>
+  </div>
+
+  <div class="container" id="movieContainer">
+       <!-- Content loads here -->
+  </div>
+
+  <div class="loader">
+    <svg width="50" height="50" viewBox="0 0 50 50">
+      <circle cx="25" cy="25" r="20" fill="none" stroke="#FACC15" stroke-width="5">
+        <animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite"
+                 values="1,200;90,150;1,200"/>
+        <animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite"
+                 values="0;-35;-124"/>
+      </circle>
+    </svg>
+  </div>
+
+  <!-- Movie Details Modal -->
+  <div id="movieModal" class="modal">
+     <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="video-container">
+            <iframe src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="modal-details">
+            <h2 class="modal-title"></h2>
+            <div class="modal-actions">
+                 <button class="play-button">▶ Play</button>
+             </div>
+             <div class="modal-info"></div>
+             <p class="modal-overview"></p>
+        </div>
+    </div>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div class="modal signup-modal">
+    <div class="modal-content signup-modal-content">
+      <span class="close">&times;</span>
+      <h2>Woohoo! No Sign Up Needed!</h2>
+      <p>You're already watching for free on Streamie! Enjoy all the content without any strings attached. Happy streaming!</p>
+      <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Excited gif" width="300">
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal login-modal" id="loginModal">
+    <div class="modal-content login-modal-content">
+      <span class="close">&times;</span>
+      <h2>Login to Your Account</h2>
+      <div class="login-options">
+        <button id="googleLoginBtn" class="oauth-button google-button">
+          <img src="/api/placeholder/24/24" alt="Google icon"> Continue with Google
+        </button>
+      </div>
+      <p class="login-info">Login to access personalized recommendations and save your watching history.</p>
+    </div>
+  </div>
+
+  <!-- Restriction Notice Modal -->
+  <div id="restrictionModal" class="modal restriction-modal">
+      <div class="modal-content">
+          <span class="close restriction-close">&times;</span>
+          <h2>Content Availability Notice</h2>
+          <p>Please note: Due to licensing agreements, some content shown may vary depending on your geographical region.</p>
+          <button id="restrictionAckBtn">Got it!</button>
+      </div>
+  </div>
+
+  <!-- External Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

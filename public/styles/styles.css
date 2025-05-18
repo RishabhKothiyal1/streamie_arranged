@@ -1,0 +1,764 @@
+/* 
+ * Streamie - Movie Streaming Platform CSS
+ * This file contains all styles for the streaming platform UI
+ */
+
+/* Base Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #141414;
+  color: white;
+}
+
+/* Prevent scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #FACC15; /* Yellow */
+}
+
+.signup-btn {
+  background-color: #FACC15; /* Yellow */
+  color: #333; /* Dark Grey */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.signup-btn:hover {
+     background-color: #EAB308; /* Darker yellow */
+ }
+
+/* Auth Buttons Container */
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Login Button Styles */
+.login-btn {
+  background-color: transparent;
+  color: white;
+  border: 1px solid #FACC15;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: rgba(250, 204, 21, 0.2);
+}
+
+/* Hero Section Styles */
+.hero {
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  margin-top: 60px; /* Space for fixed navbar */
+  position: relative;
+  transition: background-image 1s ease-in-out;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.8) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 24px;
+  margin-bottom: 30px;
+  max-width: 800px;
+}
+
+/* Filter & Browse Options Styles */
+.filter-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  background-color: rgba(0,0,0,0.7);
+  color: white;
+  border: 1px solid white;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.browse-options { 
+  display: flex; 
+  justify-content: center; 
+  gap: 10px; 
+  margin-bottom: 20px; 
+}
+
+.browse-option {
+  background-color: rgba(0,0,0,0.7); 
+  color: white;
+  border: 1px solid white; 
+  padding: 10px 20px;
+  font-size: 16px; 
+  border-radius: 4px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.browse-option.active { 
+  background-color: white; 
+  color: black; 
+}
+
+/* Main Content Container Styles */
+.container {
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.row-container {
+  margin-bottom: 30px;
+  position: relative; /* Needed for absolute positioning of nav buttons */
+}
+
+.category-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Movie Rows and Cards Styles */
+.row {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 10px 0;
+  gap: 10px;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.row::-webkit-scrollbar { 
+  display: none; 
+} /* WebKit */
+
+.movie-card {
+  flex: 0 0 auto;
+  width: 200px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  background-color: #222;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  z-index: 5;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+}
+
+.movie-info { 
+  padding: 10px; 
+}
+
+.movie-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-rating {
+  font-size: 12px;
+  color: #FACC15; /* Yellow */
+}
+
+/* Row Navigation Styles */
+.row-nav {
+  position: absolute; 
+  top: 50%; 
+  transform: translateY(-50%);
+  left: 5px; right: 5px; 
+  display: flex; 
+  justify-content: space-between;
+  z-index: 10; 
+  pointer-events: none; 
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.row-container:hover .row-nav { 
+  opacity: 1; 
+}
+
+.nav-btn {
+  background-color: rgba(0, 0, 0, 0.5); 
+  color: white;
+  border: none; 
+  padding: 20px 5px; 
+  font-size: 24px;
+  cursor: pointer; 
+  transition: background-color 0.3s ease;
+  border-radius: 4px; 
+  pointer-events: all;
+}
+
+.nav-btn:hover { 
+  background-color: rgba(0, 0, 0, 0.8); 
+}
+
+/* Loader Styles */
+.loader {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  z-index: 2000;
+}
+
+/* Modal Styles - General */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000; 
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto; /* Enable scroll if content overflows */
+  background-color: rgba(0,0,0,0.8); /* Dim background */
+}
+
+.modal-content { /* Base style for modal content areas */
+  position: relative;
+  background-color: #1f1f1f; /* Default dark background */
+  margin: 10% auto; /* Centered with margin */
+  padding: 30px 40px;
+  border-radius: 8px;
+  width: 80%; /* Responsive width */
+  max-width: 600px; /* Max width */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* Movie Details Modal Specific Styles */
+#movieModal .modal-content {
+  background-size: cover;
+  background-position: center top;
+  padding: 0; /* Reset padding for bg image */
+  max-width: 900px;
+  height: 80vh;
+  max-height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: transparent; /* Let bg image show */
+  margin: 5% auto; /* Different margin */
+  box-shadow: none; /* Remove default shadow */
+}
+
+#movieModal .modal-content::before { /* Gradient overlay for movie modal */
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  z-index: 1;
+}
+
+#movieModal .modal-details { /* Wrapper for text in movie modal */
+  padding: 30px 40px;
+  position: relative;
+  z-index: 2;
+}
+
+#movieModal .close { /* Close button specific to movie modal */
+  position: absolute;
+  top: 15px; right: 20px;
+  color: #fff;
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 40px; height: 40px;
+  line-height: 38px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+#movieModal .close:hover {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-title { 
+  font-size: 36px; 
+  margin-bottom: 15px; 
+}
+
+.modal-overview { 
+  font-size: 16px; 
+  margin-bottom: 20px; 
+  max-width: 600px; 
+  line-height: 1.5; 
+}
+
+.modal-info { 
+  font-size: 14px; 
+  margin-bottom: 25px; 
+  color: #ccc; 
+}
+
+.modal-info span { 
+  margin-right: 15px; 
+}
+
+.modal-info span:last-child { 
+  margin-right: 0; 
+}
+
+.video-container {
+  display: none; 
+  position: absolute;
+  top: 0; left: 0; 
+  width: 100%; height: 100%;
+  z-index: 4; /* Above details, below close */
+}
+
+.video-container iframe { 
+  width: 100%; 
+  height: 100%; 
+  border: none; 
+}
+
+.play-button {
+  background-color: white; 
+  color: black;
+  padding: 10px 24px; 
+  border: none;
+  border-radius: 4px; 
+  font-size: 18px;
+  font-weight: bold; 
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.play-button:hover { 
+  opacity: 0.8; 
+}
+
+/* Signup Modal Specific Styles */
+.signup-modal .modal-content {
+  background-color: #1f1f1f;
+  color: white; 
+  text-align: center;
+  padding: 40px 50px; 
+  max-width: 500px;
+  height: auto; 
+  max-height: 80vh;
+  display: block; /* Override flex if applied globally */
+}
+
+.signup-modal-content h2 {
+  font-size: 28px; 
+  margin-bottom: 20px;
+  color: #FACC15; /* Yellow */
+}
+
+.signup-modal-content p { 
+  font-size: 18px; 
+  margin-bottom: 30px; 
+  line-height: 1.6; 
+}
+
+.signup-modal-content img { 
+  border-radius: 8px; 
+  margin-top: 20px; 
+  max-width: 100%; 
+  height: auto; 
+}
+
+.signup-modal .close {
+  position: absolute; 
+  top: 10px; 
+  right: 10px;
+  background: none; 
+  color: #aaa; 
+  font-size: 25px;
+  width: auto; 
+  height: auto; 
+  line-height: 1; /* Reset specific dimensions */
+  border-radius: 0;
+  cursor: pointer; /* Ensure cursor */
+}
+
+.signup-modal .close:hover { 
+  color: #fff; 
+  background: none; 
+}
+
+/* Login Modal Specific Styles */
+.login-modal .modal-content {
+  background-color: #1f1f1f;
+  color: white;
+  text-align: center;
+  padding: 40px 50px;
+  max-width: 450px;
+  height: auto;
+  max-height: 80vh;
+  display: block;
+}
+
+.login-modal-content h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #FACC15; /* Yellow */
+}
+
+.login-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.oauth-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+  gap: 10px;
+}
+
+.google-button {
+  background-color: white;
+  color: #333;
+}
+
+.google-button:hover {
+  background-color: #f5f5f5;
+}
+
+/* Restriction Modal Styles */
+.restriction-modal .modal-content {
+  background-color: #2a2a2a; /* Slightly different dark */
+  max-width: 500px; /* Smaller max width */
+  text-align: center;
+  padding: 30px;
+  margin: 15% auto; /* Higher margin */
+}
+
+.restriction-modal h2 {
+  font-size: 22px;
+  color: #FACC15; /* Yellow */
+  margin-bottom: 15px;
+}
+
+.restriction-modal p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 25px;
+  color: #ddd; /* Lighter text */
+}
+
+.restriction-modal .close {
+  position: absolute; 
+  top: 10px; 
+  right: 15px;
+  color: #aaa; 
+  font-size: 25px; 
+  font-weight: bold;
+  cursor: pointer;
+  /* Reset styles from movie modal close if needed */
+  background: none; 
+  width: auto; 
+  height: auto;
+  line-height: 1; 
+  border-radius: 0;
+}
+
+.restriction-modal .close:hover { 
+  color: #fff; 
+}
+
+#restrictionAckBtn {
+  background-color: #FACC15; /* Yellow */
+  color: #333;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#restrictionAckBtn:hover { 
+  background-color: #EAB308; 
+}
+
+/* Search Styles */
+.search-container { 
+  position: relative; 
+  display: inline-block; 
+}
+
+.search-input {
+  padding: 8px 15px; 
+  border: 1px solid #555;
+  border-radius: 4px; 
+  margin-right: 10px;
+  font-size: 14px; 
+  background-color: rgba(0,0,0,0.7); 
+  color: white;
+}
+
+.search-input:focus { 
+  outline: none; 
+  border-color: #888; 
+}
+
+.search-results {
+  position: absolute; 
+  top: 100%; 
+  left: 0; 
+  width: 250px;
+  background-color: rgba(0, 0, 0, 0.95); 
+  border-radius: 0 0 4px 4px;
+  max-height: 300px; 
+  overflow-y: auto; 
+  z-index: 1001;
+  border: 1px solid #333; 
+  border-top: none; 
+  display: none;
+}
+
+.search-result-item {
+  display: flex; 
+  align-items: center; 
+  padding: 10px 15px;
+  cursor: pointer; 
+  transition: background-color 0.3s;
+  border-bottom: 1px solid #333;
+}
+
+.search-result-item:last-child { 
+  border-bottom: none; 
+}
+
+.search-result-item:hover { 
+  background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.search-result-item img {
+  width: 40px; 
+  height: 60px; 
+  object-fit: cover;
+  margin-right: 10px; 
+  border-radius: 2px;
+}
+
+.search-result-details { 
+  display: flex; 
+  flex-direction: column; 
+}
+
+.search-result-title { 
+  font-weight: bold; 
+  margin-bottom: 3px; 
+  font-size: 14px; 
+}
+
+.search-result-type { 
+  font-size: 12px; 
+  color: #aaa; 
+}
+
+/* User Profile Styles */
+.user-profile {
+  background-color: rgba(31, 31, 31, 0.95);
+  padding: 20px;
+  margin: 20px;
+  border-radius: 8px;
+  margin-top: 80px;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #FACC15;
+}
+
+.logout-btn {
+  background-color: transparent;
+  color: white;
+  border: 1px solid #FACC15;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: rgba(250, 204, 21, 0.2);
+}
+
+/* Recently Watched & Recommendations Styles */
+.recently-watched {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.recommendation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.clear-history {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ccc;
+  border: 1px solid #555;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear-history:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+
+.recommendations {
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #888;
+  font-style: italic;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 32px; }
+  .hero p { font-size: 18px; }
+  .filter-container { flex-direction: column; align-items: center;}
+  .filter-select { width: 80%; }
+  .container { padding: 10px; }
+  .row-container { margin-bottom: 20px; }
+  .category-title { padding-left: 10px; font-size: 20px; }
+  .row { padding: 10px 0; }
+  .movie-card { width: 130px; }
+  .movie-poster { height: 195px; }
+  #movieModal .modal-content { width: 95%; max-height: 85vh; }
+  #movieModal .modal-details { padding: 20px; }
+  .modal-title { font-size: 24px; }
+  .modal-overview { font-size: 14px; }
+  .navbar { padding: 10px 15px; }
+  .brand { font-size: 20px; }
+  .search-input { width: 120px; }
+  .signup-btn { font-size: 14px; padding: 6px 12px; }
+  .restriction-modal .modal-content { width: 90%; margin: 20% auto; } /* Adjust restriction modal */
+  .hero { margin-top: 56px; } /* Adjust for potentially smaller fixed navbar */
+  .auth-buttons { gap: 5px; } /* Smaller gap for auth buttons */
+  .login-btn, .logout-btn { font-size: 14px; padding: 6px 12px; } /* Smaller login/logout buttons */
+  .login-modal .modal-content { width: 90%; padding: 30px 25px; } /* Adjust login modal */
+  .profile-header { flex-direction: column; align-items: center; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .movie-card { width: 110px; }
+  .movie-poster { height: 165px; }
+  .browse-options { gap: 5px; }
+  .browse-option { padding: 8px 12px; font-size: 14px; }
+  .modal-content { padding: 20px; } /* General modal padding */
+  #movieModal .modal-details { padding: 15px; } /* Movie modal details padding */
+  .restriction-modal .modal-content { padding: 20px; }
+  .login-modal .modal-content { padding: 25px 15px; } /* Smaller login modal padding */
+  .oauth-button { padding: 10px 15px; font-size: 14px; } /* Smaller auth buttons */
+}
